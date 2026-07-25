@@ -1,0 +1,6 @@
+method,accuracy,macro_precision,macro_recall,macro_f1,vocabulary_size,preprocessing_seconds
+Baseline,0.65,0.651837,0.65,0.648938,6383,0.905958
+Porter Stemmer,0.6525,0.6542,0.6525,0.65154,4947,2.108303
+Snowball Stemmer,0.6525,0.6542,0.6525,0.65154,4855,1.382643
+Lancaster Stemmer,0.6325,0.635346,0.6325,0.630558,4312,1.792657
+POS Lemmatizer,0.6575,0.658646,0.6575,0.65688,5561,11.527895
