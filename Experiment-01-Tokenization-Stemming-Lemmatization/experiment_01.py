@@ -420,6 +420,7 @@ Final Result
                 "macro_recall", "macro_f1",
                 "vocabulary_size", "preprocessing_seconds",
             ],
+            lineterminator="\n",
         )
         writer.writeheader()
         for r in results:

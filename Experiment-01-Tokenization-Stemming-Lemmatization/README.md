@@ -129,23 +129,25 @@ The comparison across five preprocessing methods reveals clear trade-offs betwee
 
 | Method | Accuracy | Macro F1 | Vocabulary | Time |
 |--------|----------|----------|------------|------|
-| Baseline | 0.6500 | 0.6489 | 6383 | 0.3060 s |
-| Porter Stemmer | 0.6525 | 0.6515 | 4947 | 0.8877 s |
-| Snowball Stemmer | 0.6525 | 0.6515 | 4855 | 0.4386 s |
-| Lancaster Stemmer | 0.6325 | 0.6306 | 4312 | 0.5540 s |
-| POS Lemmatizer | 0.6575 | 0.6569 | 5561 | 5.8257 s |
+| Baseline | 0.6500 | 0.6489 | 6383 | 0.9060 s |
+| Porter Stemmer | 0.6525 | 0.6515 | 4947 | 2.1083 s |
+| Snowball Stemmer | 0.6525 | 0.6515 | 4855 | 1.3826 s |
+| Lancaster Stemmer | 0.6325 | 0.6306 | 4312 | 1.7927 s |
+| POS Lemmatizer | 0.6575 | 0.6569 | 5561 | 11.5279 s |
 
 - **POS-aware lemmatization** achieved the highest accuracy (0.6575) and macro F1-score (0.6569). By using POS tags to guide lemmatization, it preserves linguistically meaningful base forms and retains more semantic precision than stemming.
-- **POS lemmatization was the slowest method** (5.8257 s) because POS tagging was performed on every sentence before lemmatization.
-- **Porter and Snowball stemmers produced identical classification performance** (accuracy 0.6525, macro F1 0.6515). Snowball had a slightly smaller vocabulary (4855 vs. 4947) and was faster than Porter (0.4386 s vs. 0.8877 s) in this execution.
+- **POS lemmatization was the slowest method** (11.5279 s) because POS tagging was performed on every sentence before lemmatization.
+- **Porter and Snowball stemmers produced identical classification performance** (accuracy 0.6525, macro F1 0.6515). Snowball had a slightly smaller vocabulary (4855 vs. 4947) and was faster than Porter (1.3826 s vs. 2.1083 s) in this execution.
 - **Lancaster stemmer** created the smallest vocabulary (4312) but achieved the lowest classification performance (accuracy 0.6325, macro F1 0.6306), indicating that its aggressive stemming removed useful distinctions between semantically different terms.
-- **The baseline** was the fastest method (0.3060 s) but performed slightly below Porter, Snowball, and POS-aware lemmatization in both accuracy and macro F1-score.
+- **The baseline** was the fastest method (0.9060 s) but performed slightly below Porter, Snowball, and POS-aware lemmatization in both accuracy and macro F1-score.
+
+> **Note:** Preprocessing time is environment- and run-dependent. Accuracy, recall, precision, F1-score, and vocabulary size are reproducible with the fixed dataset split and random seed.
 
 ---
 
 ## Result
 
-POS-aware WordNet lemmatization was the best-performing preprocessing method for this dataset, achieving the highest macro F1-score (0.6569) and accuracy (0.6575) among all five variants. However, it also incurred the highest processing cost (5.8257 s) due to the additional POS tagging step. This result is specific to the NLTK `sentence_polarity` corpus and the experimental setup described above; it does not necessarily generalize to every sentiment analysis dataset.
+POS-aware WordNet lemmatization was the best-performing preprocessing method for this dataset, achieving the highest macro F1-score (0.6569) and accuracy (0.6575) among all five variants. However, it also incurred the highest processing cost (11.5279 s) due to the additional POS tagging step. This result is specific to the NLTK `sentence_polarity` corpus and the experimental setup described above; it does not necessarily generalize to every sentiment analysis dataset.
 
 Complete results are available in:
 
