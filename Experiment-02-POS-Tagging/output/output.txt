@@ -1,0 +1,91 @@
+
+======================================================================
+STUDENT DETAILS
+======================================================================
+Student Name    : Divya M
+Register Number : 24AD0074
+
+======================================================================
+EXPERIMENT TITLE
+======================================================================
+Develop a Part-of-Speech (POS) Tagging System Using NLTK and Evaluate
+Its Accuracy on a Corpus of News Articles
+
+======================================================================
+AIM
+======================================================================
+To implement Part-of-Speech tagging using NLTK and identify the
+grammatical categories of words in a sentence.
+
+======================================================================
+DATASET INFORMATION
+======================================================================
+Corpus          : Brown Corpus (category='news')
+Tagset          : Universal POS Tagset
+Total sentences : 4623
+Training split  : 3698 sentences (80760 tokens)
+Testing split   : 925 sentences (19794 tokens)
+
+======================================================================
+EVALUATION RESULTS
+======================================================================
+Method                            Accuracy  Precision   Recall       F1  Train(s)   Tag(s)
+------------------------------------------------------------------------------------------
+Default Tagger                      0.3025     0.0252   0.0833   0.0387    0.0000   0.0118
+Unigram Tagger                      0.9271     0.9285   0.8579   0.8815    0.2036   0.0196
+Bigram Tagger                       0.9310     0.9448   0.8570   0.8853    0.2932   0.1425
+Trigram Tagger                      0.9298     0.9408   0.8518   0.8812    0.3930   0.0500
+Averaged Perceptron Tagger          0.9324     0.8628   0.8453   0.8440    0.0000   0.9440 *
+
+* Pre-trained model (training time = 0)
+
+======================================================================
+BEST-PERFORMING TAGGER
+======================================================================
+Method : Bigram Tagger
+Macro F1-Score : 0.8853
+
+======================================================================
+PER-TAG EVALUATION (Best Tagger)
+======================================================================
+Tag       Precision   Recall       F1  Support
+----------------------------------------------
+NOUN         0.8750   0.9808   0.9249     5988
+VERB         0.9661   0.8498   0.9042     2850
+ADJ          0.9205   0.7867   0.8484     1369
+ADV          0.9296   0.7799   0.8482      677
+PRON         0.9979   0.9450   0.9707      509
+DET          0.9959   0.9910   0.9935     2224
+ADP          0.9426   0.9286   0.9356     2423
+NUM          0.9972   0.8095   0.8936      441
+CONJ         0.9962   0.9981   0.9971      521
+PRT          0.7166   0.8571   0.7806      469
+.            1.0000   1.0000   1.0000     2309
+X            1.0000   0.3571   0.5263       14
+
+======================================================================
+CUSTOM SENTENCE ANALYSIS
+======================================================================
+Sentence : The government announced a new economic policy after Parliament approved the bill.
+Tagger   : Bigram Tagger
+
+Token                Tag      Category       
+-------------------------------------------
+The                  DET      Determiner     
+government           NOUN     Noun           
+announced            VERB     Verb           
+a                    DET      Determiner     
+new                  ADJ      Adjective      
+economic             ADJ      Adjective      
+policy               NOUN     Noun           
+after                ADP      Adposition     
+Parliament           NOUN     Noun           
+approved             VERB     Verb           
+the                  DET      Determiner     
+bill                 NOUN     Noun           
+.                    .        Punctuation    
+
+======================================================================
+RESULT
+======================================================================
+The Bigram Tagger achieved the highest macro F1-score of 0.8853 among the five POS tagging approaches evaluated on the Brown news corpus with the Universal tagset.
