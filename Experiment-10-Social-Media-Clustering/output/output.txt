@@ -1,0 +1,371 @@
+==============================================================================
+                   EXPERIMENT 10 — SOCIAL MEDIA CLUSTERING
+==============================================================================
+Student Name    : Divya M
+Register Number : 24AD0074
+
+Title:
+UTILIZE WORD AND PHRASE-BASED CLUSTERING ALGORITHMS TO IDENTIFY PATTERNS
+IN SOCIAL MEDIA CONVERSATIONS AND ANALYZE THEIR IMPLICATIONS FOR
+MARKETING STRATEGIES.
+
+Aim:
+To apply clustering techniques on social media posts using TF-IDF
+(Term Frequency–Inverse Document Frequency) and K-Means to identify
+customer trends and marketing insights.
+
+==============================================================================
+                               DATASET SUMMARY
+==============================================================================
+Total posts       : 75
+Themes            : 5
+Posts per theme    : 15
+Sentiments/theme  : 5 positive, 5 negative, 5 neutral
+
+Theme counts:
+  product_quality                : 15
+  delivery_experience            : 15
+  customer_support               : 15
+  pricing_promotions             : 15
+  sustainability_brand           : 15
+
+Sentiment counts:
+  positive                       : 25
+  negative                       : 25
+  neutral                        : 25
+
+==============================================================================
+                                PREPROCESSING
+==============================================================================
+Shared preprocessing pipeline:
+  1. Convert to lowercase
+  2. Remove URLs
+  3. Remove @mentions
+  4. Strip # symbol, retain hashtag word
+  5. Tokenize with nltk.word_tokenize
+  6. Retain alphabetic tokens only
+  7. Remove English stopwords
+  8. WordNet lemmatization
+  9. Remove tokens shorter than 2 characters
+
+True themes and sentiment labels are NOT used during
+preprocessing or clustering. They are used only for
+post-hoc evaluation and interpretation.
+
+==============================================================================
+                              CLUSTERING METHODS
+==============================================================================
+A. Word-Based K-Means
+   TF-IDF: ngram_range=(1,1), sublinear_tf, L2 norm
+   KMeans: k=5, n_init=20, max_iter=500, seed=42
+
+B. Word-and-Phrase K-Means  [REQUIRED METHOD]
+   TF-IDF: ngram_range=(1,2), sublinear_tf, L2 norm
+   KMeans: k=5, n_init=20, max_iter=500, seed=42
+   Uses both unigram and bigram phrase features.
+
+C. Agglomerative Word-and-Phrase
+   Same TF-IDF as method B (unigram + bigram)
+   AgglomerativeClustering: k=5, cosine, average linkage
+
+Known themes are used ONLY to benchmark discovered clusters
+and are NOT provided to the algorithms during training.
+
+==============================================================================
+                              EVALUATION RESULTS
+==============================================================================
+Method                                  ARI     NMI  Purity   Silh.   k    Time
+-------------------------------------------------------------------------------
+Word-Based K-Means                   0.1290  0.2703  0.5200  0.0185   5  0.151s
+Word-and-Phrase K-Means              0.0952  0.1921  0.4267  0.0094   5  0.172s
+Agglomerative Word-and-Phrase        0.0988  0.1888  0.4533  0.0126   5  0.093s
+
+Best method: Word-Based K-Means
+Tie info   : No tie.
+
+==============================================================================
+               WORD-BASED vs WORD-AND-PHRASE K-MEANS COMPARISON
+==============================================================================
+Word-Based vocabulary size        : 403
+Word-and-Phrase vocabulary size    : 954
+ARI difference  (phrase - word)    : -0.0338
+NMI difference  (phrase - word)    : -0.0782
+Purity difference                 : -0.0933
+Silhouette difference             : -0.0092
+Verdict: Including bigram phrases reduced the clustering quality.
+
+==============================================================================
+                     CLUSTER DETAILS — WORD-BASED K-MEANS
+==============================================================================
+  Cluster 0:
+    Posts          : 14
+    Majority theme : pricing_promotions
+    Dominant sent. : neutral
+    Sent. dist.    : {'neutral': 9, 'negative': 4, 'positive': 1}
+    Top terms      : price, nothing, standard, sale, special, range, material, seems
+    Cluster purity : 0.4286
+    Marketing insight: Explain promotion conditions more clearly.
+
+  Cluster 1:
+    Posts          : 30
+    Majority theme : customer_support
+    Dominant sent. : negative
+    Sent. dist.    : {'positive': 9, 'negative': 12, 'neutral': 9}
+    Top terms      : support, got, hour, customer, issue, service, sustainability, read
+    Cluster purity : 0.4000
+    Marketing insight: Reduce response time and improve escalation.
+
+  Cluster 2:
+    Posts          : 8
+    Majority theme : sustainability_brand
+    Dominant sent. : positive
+    Sent. dist.    : {'positive': 4, 'negative': 3, 'neutral': 1}
+    Top terms      : eco, much, green, recyclable, program, came, friendly, certification
+    Cluster purity : 0.7500
+    Marketing insight: Strengthen sustainability-focused messaging.
+
+  Cluster 3:
+    Posts          : 14
+    Majority theme : delivery_experience
+    Dominant sent. : positive
+    Sent. dist.    : {'negative': 4, 'positive': 6, 'neutral': 4}
+    Top terms      : delivery, day, coast, two, order, shipping, novamart, completely
+    Cluster purity : 0.5714
+    Marketing insight: Highlight reliable shipping performance.
+
+  Cluster 4:
+    Posts          : 9
+    Majority theme : product_quality
+    Dominant sent. : positive
+    Sent. dist.    : {'positive': 5, 'negative': 2, 'neutral': 2}
+    Top terms      : quality, zenithpro, build, tablet, screen, feel, actually, stitching
+    Cluster purity : 0.7778
+    Marketing insight: Promote reliability and customer testimonials.
+
+==============================================================================
+                  CLUSTER DETAILS — WORD-AND-PHRASE K-MEANS
+==============================================================================
+  Cluster 0:
+    Posts          : 35
+    Majority theme : sustainability_brand
+    Dominant sent. : negative
+    Sent. dist.    : {'positive': 12, 'negative': 16, 'neutral': 7}
+    Top terms      : actually, delivery, sustainability, product, green, eco, still, shipping
+    Cluster purity : 0.3429
+    Marketing insight: Provide evidence for environmental claims.
+
+  Cluster 1:
+    Posts          : 4
+    Majority theme : sustainability_brand
+    Dominant sent. : neutral
+    Sent. dist.    : {'neutral': 3, 'positive': 1}
+    Top terms      : novatech, curious, carbon, anyone, anyone detail, novatech measure, measure, curious novatech
+    Cluster purity : 0.5000
+    Marketing insight: Publish measurable sustainability progress.
+
+  Cluster 2:
+    Posts          : 13
+    Majority theme : product_quality
+    Dominant sent. : positive
+    Sent. dist.    : {'negative': 4, 'neutral': 4, 'positive': 5}
+    Top terms      : order, got, week, packaging, fine, pct, item, three
+    Cluster purity : 0.2308
+    Marketing insight: Promote reliability and customer testimonials.
+
+  Cluster 3:
+    Posts          : 11
+    Majority theme : customer_support
+    Dominant sent. : neutral
+    Sent. dist.    : {'positive': 4, 'neutral': 6, 'negative': 1}
+    Top terms      : support, hour, novamart, anyone know, know, anyone, weekend, brightedge
+    Cluster purity : 0.6364
+    Marketing insight: Publish support channels and service-hour information.
+
+  Cluster 4:
+    Posts          : 12
+    Majority theme : pricing_promotions
+    Dominant sent. : neutral
+    Sent. dist.    : {'neutral': 5, 'positive': 3, 'negative': 4}
+    Top terms      : price, nothing, discount, sale, went, special, nothing special, sale price
+    Cluster purity : 0.6667
+    Marketing insight: Explain promotion conditions more clearly.
+
+==============================================================================
+               CLUSTER DETAILS — AGGLOMERATIVE WORD-AND-PHRASE
+==============================================================================
+  Cluster 0:
+    Posts          : 20
+    Majority theme : product_quality
+    Dominant sent. : negative
+    Sent. dist.    : {'positive': 7, 'negative': 9, 'neutral': 4}
+    Top terms      : quality, sustainability, still, tracking, feel, actually, week, getting
+    Cluster purity : 0.3500
+    Marketing insight: Prioritize defect analysis and product improvements.
+
+  Cluster 1:
+    Posts          : 21
+    Majority theme : pricing_promotions
+    Dominant sent. : neutral
+    Sent. dist.    : {'neutral': 8, 'positive': 7, 'negative': 6}
+    Top terms      : price, nothing, got, sale, went, order, discount, packaging
+    Cluster purity : 0.4762
+    Marketing insight: Explain promotion conditions more clearly.
+
+  Cluster 2:
+    Posts          : 21
+    Majority theme : customer_support
+    Dominant sent. : neutral
+    Sent. dist.    : {'positive': 6, 'negative': 5, 'neutral': 10}
+    Top terms      : support, anyone, day, hour, novatech, delivery, novamart, anyone know
+    Cluster purity : 0.4762
+    Marketing insight: Publish support channels and service-hour information.
+
+  Cluster 3:
+    Posts          : 7
+    Majority theme : sustainability_brand
+    Dominant sent. : positive
+    Sent. dist.    : {'positive': 3, 'neutral': 2, 'negative': 2}
+    Top terms      : green, much, best, loyalty, program, year, different, manufacturing different
+    Cluster purity : 0.5714
+    Marketing insight: Strengthen sustainability-focused messaging.
+
+  Cluster 4:
+    Posts          : 6
+    Majority theme : sustainability_brand
+    Dominant sent. : negative
+    Sent. dist.    : {'positive': 2, 'negative': 3, 'neutral': 1}
+    Top terms      : box, eco, friendly, experience, eco friendly, item, refers, actually refers
+    Cluster purity : 0.5000
+    Marketing insight: Provide evidence for environmental claims.
+
+==============================================================================
+                           MARKETING INSIGHTS NOTE
+==============================================================================
+These are exploratory recommendations inferred from the
+embedded posts. They do not claim causal business conclusions.
+
+==============================================================================
+                 ASSIGNMENT TABLE — WORD-BASED K-MEANS (BEST)
+==============================================================================
+  ID True Theme                Sent.      Cl. Interp. Theme                Sim.
+-------------------------------------------------------------------------------
+ S01 product_quality           positive     4 product_quality            0.5807
+ S02 product_quality           positive     1 customer_support           0.1776
+ S03 product_quality           positive     1 customer_support           0.2327
+ S04 product_quality           positive     4 product_quality            0.4501
+ S05 product_quality           positive     4 product_quality            0.3815
+ S06 product_quality           negative     4 product_quality            0.4536
+ S07 product_quality           negative     3 delivery_experience        0.2865
+ S08 product_quality           negative     1 customer_support           0.1614
+ S09 product_quality           negative     1 customer_support           0.2008
+ S10 product_quality           negative     4 product_quality            0.3886
+ S11 product_quality           neutral      0 pricing_promotions         0.2764
+ S12 product_quality           neutral      4 product_quality            0.3163
+ S13 product_quality           neutral      4 product_quality            0.4064
+ S14 product_quality           neutral      0 pricing_promotions         0.5536
+ S15 product_quality           neutral      0 pricing_promotions         0.2313
+ S16 delivery_experience       positive     3 delivery_experience        0.3431
+ S17 delivery_experience       positive     3 delivery_experience        0.5340
+ S18 delivery_experience       positive     1 customer_support           0.1726
+ S19 delivery_experience       positive     3 delivery_experience        0.4363
+ S20 delivery_experience       positive     2 sustainability_brand       0.4361
+ S21 delivery_experience       negative     1 customer_support           0.2526
+ S22 delivery_experience       negative     3 delivery_experience        0.3307
+ S23 delivery_experience       negative     0 pricing_promotions         0.2973
+ S24 delivery_experience       negative     1 customer_support           0.1461
+ S25 delivery_experience       negative     3 delivery_experience        0.3572
+ S26 delivery_experience       neutral      0 pricing_promotions         0.3837
+ S27 delivery_experience       neutral      3 delivery_experience        0.4128
+ S28 delivery_experience       neutral      3 delivery_experience        0.3111
+ S29 delivery_experience       neutral      1 customer_support           0.2645
+ S30 delivery_experience       neutral      3 delivery_experience        0.3422
+ S31 customer_support          positive     1 customer_support           0.2958
+ S32 customer_support          positive     1 customer_support           0.2518
+ S33 customer_support          positive     1 customer_support           0.2157
+ S34 customer_support          positive     1 customer_support           0.2383
+ S35 customer_support          positive     3 delivery_experience        0.2883
+ S36 customer_support          negative     1 customer_support           0.3107
+ S37 customer_support          negative     1 customer_support           0.3030
+ S38 customer_support          negative     1 customer_support           0.3746
+ S39 customer_support          negative     1 customer_support           0.1461
+ S40 customer_support          negative     3 delivery_experience        0.2983
+ S41 customer_support          neutral      1 customer_support           0.2877
+ S42 customer_support          neutral      1 customer_support           0.2755
+ S43 customer_support          neutral      3 delivery_experience        0.3087
+ S44 customer_support          neutral      1 customer_support           0.2719
+ S45 customer_support          neutral      1 customer_support           0.2169
+ S46 pricing_promotions        positive     4 product_quality            0.3266
+ S47 pricing_promotions        positive     2 sustainability_brand       0.3941
+ S48 pricing_promotions        positive     3 delivery_experience        0.2720
+ S49 pricing_promotions        positive     4 product_quality            0.4044
+ S50 pricing_promotions        positive     3 delivery_experience        0.2514
+ S51 pricing_promotions        negative     0 pricing_promotions         0.4152
+ S52 pricing_promotions        negative     0 pricing_promotions         0.4558
+ S53 pricing_promotions        negative     1 customer_support           0.1861
+ S54 pricing_promotions        negative     0 pricing_promotions         0.4340
+ S55 pricing_promotions        negative     1 customer_support           0.1933
+ S56 pricing_promotions        neutral      0 pricing_promotions         0.3950
+ S57 pricing_promotions        neutral      0 pricing_promotions         0.3504
+ S58 pricing_promotions        neutral      1 customer_support           0.1620
+ S59 pricing_promotions        neutral      1 customer_support           0.2347
+ S60 pricing_promotions        neutral      0 pricing_promotions         0.3024
+ S61 sustainability_brand      positive     2 sustainability_brand       0.3373
+ S62 sustainability_brand      positive     1 customer_support           0.2094
+ S63 sustainability_brand      positive     1 customer_support           0.2483
+ S64 sustainability_brand      positive     2 sustainability_brand       0.4401
+ S65 sustainability_brand      positive     0 pricing_promotions         0.2331
+ S66 sustainability_brand      negative     2 sustainability_brand       0.4022
+ S67 sustainability_brand      negative     1 customer_support           0.2028
+ S68 sustainability_brand      negative     2 sustainability_brand       0.5547
+ S69 sustainability_brand      negative     1 customer_support           0.1802
+ S70 sustainability_brand      negative     2 sustainability_brand       0.3554
+ S71 sustainability_brand      neutral      1 customer_support           0.2240
+ S72 sustainability_brand      neutral      1 customer_support           0.2053
+ S73 sustainability_brand      neutral      2 sustainability_brand       0.3866
+ S74 sustainability_brand      neutral      0 pricing_promotions         0.2353
+ S75 sustainability_brand      neutral      0 pricing_promotions         0.2764
+
+==============================================================================
+                             CUSTOM POST ANALYSIS
+==============================================================================
+Original text     : Love the new design, but my order arrived late and support never replied.
+Processed tokens  : ['love', 'new', 'design', 'order', 'arrived', 'late', 'support', 'never', 'replied']
+
+Word-Based K-Means:
+  Cluster         : 1
+  Interp. theme   : customer_support
+  Similarity      : 0.1626
+
+Word-and-Phrase K-Means:
+  Cluster         : 2
+  Interp. theme   : product_quality
+  Similarity      : 0.2216
+
+Agglomerative Word-and-Phrase:
+  Cluster         : 1
+  Interp. theme   : pricing_promotions
+  Similarity      : 0.1588
+
+Final theme (from Word-Based K-Means): customer_support
+Marketing insight: Reduce response time and improve escalation.
+
+==============================================================================
+                                    RESULT
+==============================================================================
+Best clustering method: Word-Based K-Means
+  ARI=0.1290  NMI=0.2703  Purity=0.5200  Silhouette=0.0185
+
+Phrase features effect: Including bigram phrases reduced the clustering quality.
+
+Main exploratory customer trends identified:
+  Cluster 0: pricing_promotions (neutral)
+  Cluster 1: customer_support (negative)
+  Cluster 2: sustainability_brand (positive)
+  Cluster 3: delivery_experience (positive)
+  Cluster 4: product_quality (positive)
+
+NOTE: Results are specific to the embedded dataset of 75 posts.
+Cluster interpretations do not prove causal marketing effects.
+Scores should not be overstated when ARI, NMI, purity or
+silhouette values are modest.
+==============================================================================
