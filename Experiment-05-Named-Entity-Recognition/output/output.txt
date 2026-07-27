@@ -1,0 +1,158 @@
+==============================================================================
+  Natural Language Processing Laboratory
+==============================================================================
+
+  Student Name    : Divya M
+  Register Number : 24AD0074
+  Experiment      : 05
+
+  Title: Implement a Named Entity Recognition (NER) Model Using Apache OpenNLP and Assess Its Accuracy on Legal Text Documents
+
+  Aim: To implement Named Entity Recognition (NER) using Apache OpenNLP and identify named entities such as person names, organizations, and locations in legal text documents.
+
+  Note: This implementation compares alternative Python/NLTK-based NER
+  algorithms while retaining the prescribed experiment objective. The
+  original title and aim reference Apache OpenNLP; however, as permitted
+  by the staff, the program uses Python-native approaches for comparative
+  analysis of NER techniques on legal text documents.
+
+==============================================================================
+  Dataset Summary
+==============================================================================
+
+  Total sentences   : 56
+  Training sentences: 44
+  Testing sentences : 12
+  Total tokens      : 928
+  Training tokens   : 715
+  Testing tokens    : 213
+
+==============================================================================
+  Entity Counts (Full Dataset)
+==============================================================================
+
+  O                   : 548
+  PERSON              : 116
+  ORGANIZATION        : 168
+  LOCATION            : 13
+  LEGAL_REFERENCE     : 83
+
+==============================================================================
+  Model Descriptions
+==============================================================================
+
+  A. Proper-Noun POS Baseline
+     Tokenize and POS-tag each sentence. Classify consecutive NNP/NNPS
+     tokens as PERSON; all others as O. A deliberately simple baseline.
+
+  B. Rule-Based Legal NER
+     Uses deterministic patterns and embedded gazetteers to detect PERSON,
+     ORGANIZATION, LOCATION, and LEGAL_REFERENCE entities from titles,
+     organization suffixes, location vocabulary, and legal patterns.
+
+  C. NLTK ne_chunk
+     Applies POS tagging followed by nltk.ne_chunk. Maps chunk labels to
+     the target entity types and adds rule-based LEGAL_REFERENCE detection.
+
+  D. Supervised Logistic Regression Token Classifier
+     Trains a token-level multiclass LogisticRegression model on contextual
+     features (token shape, POS, context window, gazetteers). Uses
+     class_weight='balanced', max_iter=1000, random_state=42.
+
+==============================================================================
+  Evaluation Results
+==============================================================================
+
+  Model           Acc   MacP   MacR  MacF1   MicP   MicR  MicF1  Time(s)
+  --------------------------------------------------------------------------
+  A_POS        0.6714 0.0691 0.2188 0.1050 0.2763 0.2386 0.2561   0.2080
+  B_Rule       0.8826 0.8141 0.8310 0.7599 0.8904 0.7386 0.8075   0.0095
+  C_NLTK       0.7653 0.5610 0.5101 0.4858 0.5493 0.4432 0.4906   9.7771
+  D_LR         0.9437 0.6630 0.7089 0.6847 0.8791 0.9091 0.8939 0.591+0.040
+
+==============================================================================
+  Best-Performing Model
+==============================================================================
+
+  B_Rule
+  Selected by: highest entity-only macro F1 -> micro F1 -> accuracy
+
+==============================================================================
+  Per-Entity Metrics (Best Model)
+==============================================================================
+
+  Entity                Precision     Recall         F1    Support
+  --------------------------------------------------------------
+  PERSON                   1.0000     0.9167     0.9565         24
+  ORGANIZATION             0.9565     0.5500     0.6984         40
+  LOCATION                 0.3000     1.0000     0.4615          3
+  LEGAL_REFERENCE          1.0000     0.8571     0.9231         21
+
+==============================================================================
+  Confusion Matrix (Best Model)
+==============================================================================
+
+                         O  PERSONORGANIZATIONLOCATIONLEGAL_REFERENCE
+  -------------------------------------------------------------------
+  O                    123       0       1       1       0
+  PERSON                 2      22       0       0       0
+  ORGANIZATION          12       0      22       6       0
+  LOCATION               0       0       0       3       0
+  LEGAL_REFERENCE        3       0       0       0      18
+
+==============================================================================
+  Custom Legal Text Analysis
+==============================================================================
+
+  Input: Justice Meera Rao directed Horizon Technologies Limited to submit its response before the High Court of Karnataka under Section 18 of the Digital Records Act.
+
+  Token                               Label
+  -------------------------------------------------------
+  Justice                             PERSON
+  Meera                               PERSON
+  Rao                                 PERSON
+  directed                            O
+  Horizon                             ORGANIZATION
+  Technologies                        ORGANIZATION
+  Limited                             ORGANIZATION
+  to                                  O
+  submit                              O
+  its                                 O
+  response                            O
+  before                              O
+  the                                 O
+  High                                ORGANIZATION
+  Court                               ORGANIZATION
+  of                                  O
+  Karnataka                           LOCATION
+  under                               O
+  Section                             LEGAL_REFERENCE
+  18                                  LEGAL_REFERENCE
+  of                                  O
+  the                                 O
+  Digital                             LEGAL_REFERENCE
+  Records                             LEGAL_REFERENCE
+  Act                                 LEGAL_REFERENCE
+  .                                   O
+
+  Grouped Entities:
+  Entity                                   Type
+  ------------------------------------------------------------
+  Justice Meera Rao                        -> PERSON
+  Horizon Technologies Limited             -> ORGANIZATION
+  High Court                               -> ORGANIZATION
+  Karnataka                                -> LOCATION
+  Section 18                               -> LEGAL_REFERENCE
+  Digital Records Act                      -> LEGAL_REFERENCE
+
+==============================================================================
+  Result
+==============================================================================
+
+  The experiment successfully compared four NER approaches on legal text.
+  The best-performing model was B_Rule, which achieved the highest
+  entity-only macro F1-score on the test set. Named entities including
+  PERSON, ORGANIZATION, LOCATION, and LEGAL_REFERENCE were identified
+  in legal text documents as required by the experiment objective.
+
+==============================================================================
