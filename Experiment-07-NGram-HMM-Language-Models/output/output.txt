@@ -1,0 +1,132 @@
+========================================================================
+NATURAL LANGUAGE PROCESSING LABORATORY
+========================================================================
+Student Name    : Divya M
+Register Number : 24AD0074
+Experiment      : 07
+
+Title: Construct a Language Model Using N-Gram Models and Compare Its
+Performance with a Hidden Markov Model (HMM) on a Corpus of Tweets
+
+Aim: To construct N-Gram and Hidden Markov Model (HMM) language models and
+compare their ability to capture word sequences in tweet data.
+========================================================================
+
+1. DATASET SUMMARY
+------------------------------------------------------------------------
+  Source              : NLTK twitter_samples corpus
+  Total tweets        : 1000
+  Positive tweets     : 500
+  Negative tweets     : 500
+  Training tweets     : 800
+  Testing tweets      : 200
+  Training tokens     : 8438
+  Testing tokens      : 2106
+  Vocabulary size     : 784
+  Random seed         : 42
+  Train/test split    : 80% / 20%
+  Stratified by       : positive/negative source label
+  Min tokens/tweet    : 3 (after preprocessing)
+
+2. PREPROCESSING
+------------------------------------------------------------------------
+  - TweetTokenizer (preserve_case=False, reduce_len=True, strip_handles=True)
+  - Remove URLs
+  - Remove standalone punctuation
+  - Strip '#' symbol, retain hashtag word
+  - Retain alphabetic words and simple contractions
+  - Lowercase all tokens
+  - WordNet lemmatization
+  - Stopwords retained (important for language modeling)
+  - Sentence-boundary padding added for N-Gram training
+  - Unknown-token cutoff: words appearing < 2 times -> <UNK>
+
+3. N-GRAM LANGUAGE MODELS
+------------------------------------------------------------------------
+  A. Unigram Laplace model  (n=1)
+  B. Bigram Laplace model   (n=2)
+  C. Trigram Laplace model  (n=3)
+
+  All models use Laplace (add-one) smoothing via nltk.lm.Laplace.
+
+4. N-GRAM EVALUATION RESULTS
+------------------------------------------------------------------------
+  Model            Avg PP     Med PP  Top-1 Acc  Top-3 Acc  Eval(s)  Tweets OK
+  ----------------------------------------------------------------------
+  Unigram          168.91     125.34    0.0347     0.0826    4.03s   200/200
+  Bigram           238.90     209.23    0.1011     0.1762    9.05s   200/200
+  Trigram          378.29     374.83    0.1125     0.1448   10.64s   200/200
+
+  Best N-Gram model: Unigram (lowest average perplexity)
+
+5. HIDDEN MARKOV MODEL (HMM)
+------------------------------------------------------------------------
+  Methodology:
+  - Trained using NLTK HiddenMarkovModelTrainer (supervised)
+  - POS tags: Universal tagset via nltk.pos_tag(tagset='universal')
+  - These are SILVER-STANDARD labels produced by NLTK's pretrained POS
+    tagger, NOT manually annotated gold labels. The tagger was trained
+    on standard English text and applied automatically to tweets.
+
+  Evaluation Metrics:
+    Token-level POS accuracy : 0.7735
+    Macro precision          : 0.7430
+    Macro recall             : 0.7836
+    Macro F1-score           : 0.7592
+    Training time            : 0.01s
+    Tagging time             : 0.20s
+    Total test tokens        : 2106
+    Avg log-prob per token   : -10.5698
+
+6. CONCEPTUAL COMPARISON: N-GRAM vs HMM
+------------------------------------------------------------------------
+  N-Gram models are evaluated as word-sequence predictors using
+  perplexity and next-word accuracy. They model P(word | context)
+  directly from surface-level word co-occurrences.
+
+  The HMM is evaluated as a hidden-state sequence-labeling model using
+  POS-tagging accuracy and F1-score. It models the joint probability
+  P(words, tags) through emission and transition probabilities.
+
+  Both approaches capture local sequence dependencies:
+  - N-Grams use fixed-length word windows (unigram/bigram/trigram).
+  - HMMs use latent POS states with Markov transition assumptions.
+
+  Their numerical metrics measure fundamentally different tasks:
+  - Perplexity measures how well the model predicts the next word.
+  - POS accuracy measures how well the model recovers hidden labels.
+  Therefore, a direct numerical comparison between N-Gram perplexity
+  and HMM POS accuracy would be misleading and is not performed.
+
+7. CUSTOM TWEET ANALYSIS
+------------------------------------------------------------------------
+  Original  : AI is transforming social media one post at a time
+  Tokens    : ['ai', 'is', 'transforming', 'social', 'medium', 'one', 'post', 'at', 'a', 'time']
+  Unigrams  : ['ai', 'is', 'transforming', 'social', 'medium', 'one', 'post', 'at', 'a', 'time']
+  Bigrams   : [('ai', 'is'), ('is', 'transforming'), ('transforming', 'social'), ('social', 'medium'), ('medium', 'one'), ('one', 'post'), ('post', 'at'), ('at', 'a'), ('a', 'time')]
+  Trigrams  : [('ai', 'is', 'transforming'), ('is', 'transforming', 'social'), ('transforming', 'social', 'medium'), ('social', 'medium', 'one'), ('medium', 'one', 'post'), ('one', 'post', 'at'), ('post', 'at', 'a'), ('at', 'a', 'time')]
+  Top-5 next words (Unigram): ['i', 'you', 'the', 'a', 'to']
+  HMM POS tags:
+    ai                   NOUN   Noun
+    is                   VERB   Verb
+    transforming         VERB   Verb
+    social               ADJ    Adjective
+    medium               NOUN   Noun
+    one                  NUM    Numeral
+    post                 NOUN   Noun
+    at                   ADP    Adposition
+    a                    DET    Determiner
+    time                 NOUN   Noun
+
+8. RESULT
+------------------------------------------------------------------------
+  N-Gram and Hidden Markov Model language models were successfully
+  constructed and evaluated on a balanced corpus of 1000 tweets from
+  NLTK twitter_samples. The Unigram model achieved the lowest
+  average perplexity among the N-Gram models. The HMM achieved a
+  token-level POS accuracy of 0.7735 and macro
+  F1-score of 0.7592 using silver-standard
+  Universal POS labels. The two model families capture local sequence
+  dependencies through complementary mechanisms and are evaluated on
+  different tasks, making direct numerical comparison inappropriate.
+========================================================================
