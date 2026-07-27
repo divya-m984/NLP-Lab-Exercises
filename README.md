@@ -1,4 +1,4 @@
-# NLP Lab Exercises
+# NLP Lab
 
 **Student Name:** Divya M
 **Register Number:** 24AD0074
@@ -7,7 +7,8 @@
 
 ## Description
 
-This repository contains laboratory exercises for the Natural Language Processing course. Each experiment investigates a core NLP problem using Python, exploring multiple algorithms and comparing their effectiveness rather than following a single prescribed approach.
+Repo for my Natural Language Processing course. Each experiment investigates a core NLP problem using Python, exploring multiple algorithms and comparing their effectiveness rather than following a single prescribed approach. 
+PS - no README inside project directories because i was instructed so.
 
 ---
 
@@ -28,84 +29,6 @@ This repository contains laboratory exercises for the Natural Language Processin
 
 ---
 
-## Repository Structure
-
-```
-NLP-Lab-Exercises/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── Experiment-01-Tokenization-Stemming-Lemmatization/
-│   ├── experiment_01.py
-│   ├── README.md
-│   └── output/
-├── Experiment-02-POS-Tagging/
-│   ├── experiment_02.py
-│   ├── README.md
-│   └── output/
-├── Experiment-03-Text-Similarity-Headline-Clustering/
-│   ├── experiment_03.py
-│   ├── README.md
-│   └── output/
-├── Experiment-04-Information-Retrieval/
-│   ├── experiment_04.py
-│   ├── README.md
-│   └── output/
-├── Experiment-05-Named-Entity-Recognition/
-│   ├── experiment_05.py
-│   ├── README.md
-│   └── output/
-├── Experiment-06-Biomedical-Relation-Identification/
-│   ├── experiment_06.py
-│   ├── README.md
-│   └── output/
-├── Experiment-07-NGram-HMM-Language-Models/
-│   ├── experiment_07.py
-│   ├── README.md
-│   └── output/
-├── Experiment-08-Topic-Modeling-TSNE/
-│   ├── experiment_08.py
-│   ├── README.md
-│   └── output/
-├── Experiment-09-Legal-Document-Classification/
-│   ├── experiment_09.py
-│   ├── README.md
-│   └── output/
-└── Experiment-10-Social-Media-Clustering/
-    ├── experiment_10.py
-    ├── README.md
-    └── output/
-```
-
----
-
-## Setup
-
-**1. Create and activate a virtual environment:**
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-
-**2. Install dependencies:**
-
-```bash
-pip install -r requirements.txt
-```
-
-**3. Download required NLTK data (run once):**
-
-```python
-import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
-```
-
----
 
 ## Execution
 
@@ -130,4 +53,3 @@ Each experiment's `output/` directory will contain:
 
 - `output.txt` — printed results captured from the terminal run
 - Terminal screenshots showing program execution and results
-- Plots (`.png`) where visualization is part of the experiment (e.g., t-SNE scatter plots, accuracy bar charts)
