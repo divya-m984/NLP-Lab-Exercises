@@ -1,0 +1,128 @@
+========================================================================
+EXPERIMENT 06 — BIOMEDICAL RELATION IDENTIFICATION
+========================================================================
+
+Student Name    : Divya M
+Register Number : 24AD0074
+
+Title: Investigate Different Approaches for Relation Identification in Biomedical Texts and Evaluate Their Precision and Recall
+
+Aim: To identify relations between biomedical entities using a rule-based approach and evaluate the performance using Precision, Recall, and F1-Score.
+
+Note: Multiple alternative algorithms are compared in this experiment.
+      The original title and aim are preserved while evaluating a
+      keyword baseline, regex patterns, Naive Bayes and Logistic
+      Regression on the same biomedical relation-identification task.
+
+------------------------------------------------------------------------
+DATASET SUMMARY
+------------------------------------------------------------------------
+Total sentences     : 75
+Training sentences  : 60
+Testing sentences   : 15
+
+Relation counts (Total / Train / Test):
+  TREATS                 15  /   12  /    3
+  CAUSES                 15  /   12  /    3
+  INHIBITS               15  /   12  /    3
+  ASSOCIATED_WITH        15  /   12  /    3
+  NO_RELATION            15  /   12  /    3
+
+------------------------------------------------------------------------
+APPROACH DESCRIPTIONS
+------------------------------------------------------------------------
+
+A. Keyword Baseline
+   Deterministic keyword matching with fixed precedence:
+   TREATS > CAUSES > INHIBITS > ASSOCIATED_WITH > NO_RELATION
+   Uses predefined keyword groups per relation type.
+
+B. Regex and Pattern-Based Classifier
+   Regular expression patterns examining entity order, words between
+   entities, passive constructions, and multi-word phrases.
+   Returns one of five relation labels based on pattern matches.
+
+C. Multinomial Naive Bayes
+   TF-IDF vectorization with unigrams and bigrams (ngram_range=(1,2)).
+   Trained on preprocessed training sentences.
+
+D. Logistic Regression
+   TF-IDF vectorization with unigrams and bigrams.
+   max_iter=1000, class_weight='balanced', random_state=42.
+
+------------------------------------------------------------------------
+EVALUATION TABLE
+------------------------------------------------------------------------
+Method                    Acc  M-Prec  M-Rec   M-F1   W-F1   T-Time   I-Time
+----------------------------------------------------------------------------
+Keyword Baseline        0.600   0.608  0.600  0.542  0.542      N/A   0.0107
+Regex Patterns          1.000   1.000  1.000  1.000  1.000      N/A   0.0032
+Naive Bayes             0.600   0.667  0.600  0.560  0.560   0.0098   0.0015
+Logistic Regression     0.667   0.875  0.667  0.669  0.669   0.0146   0.0012
+
+Best-performing method: Regex Patterns
+  (Selected by: highest macro F1 > macro recall > accuracy)
+
+------------------------------------------------------------------------
+PER-RELATION METRICS — Regex Patterns
+------------------------------------------------------------------------
+Relation                Precision   Recall       F1  Support
+------------------------------------------------------------
+TREATS                      1.000    1.000    1.000        3
+CAUSES                      1.000    1.000    1.000        3
+INHIBITS                    1.000    1.000    1.000        3
+ASSOCIATED_WITH             1.000    1.000    1.000        3
+NO_RELATION                 1.000    1.000    1.000        3
+
+------------------------------------------------------------------------
+CONFUSION MATRIX — Regex Patterns
+------------------------------------------------------------------------
+Rows: True label | Columns: Predicted label
+
+                   TREATS   CAUSES INHIBITS  ASSOC_W   NO_REL
+TREATS                  3        0        0        0        0
+CAUSES                  0        3        0        0        0
+INHIBITS                0        0        3        0        0
+ASSOCIATED_WITH         0        0        0        3        0
+NO_RELATION             0        0        0        0        3
+
+------------------------------------------------------------------------
+ERROR ANALYSIS
+------------------------------------------------------------------------
+No misclassified examples were found.
+------------------------------------------------------------------------
+CUSTOM BIOMEDICAL SENTENCE ANALYSIS
+------------------------------------------------------------------------
+Sentence  : Metformin controls blood glucose in patients with type 2 diabetes.
+Entity 1  : Metformin
+Entity 2  : type 2 diabetes
+Tokens    : ['metformin', 'control', 'blood', 'glucose', 'patient', 'type', 'diabetes']
+
+  Keyword Baseline       => NO_RELATION
+  Regex Patterns         => TREATS
+  Naive Bayes            => ASSOCIATED_WITH
+  Logistic Regression    => ASSOCIATED_WITH
+
+Final prediction (Regex Patterns): TREATS
+
+  Naive Bayes probabilities:
+    TREATS               0.2067
+    CAUSES               0.1944
+    INHIBITS             0.1797
+    ASSOCIATED_WITH      0.2303
+    NO_RELATION          0.1889
+  Logistic Regression probabilities:
+    TREATS               0.2106
+    CAUSES               0.1955
+    INHIBITS             0.1757
+    ASSOCIATED_WITH      0.2222
+    NO_RELATION          0.1961
+
+------------------------------------------------------------------------
+RESULT
+------------------------------------------------------------------------
+The experiment compared four approaches for biomedical relation
+identification: Keyword Baseline, Regex Patterns, Multinomial Naive
+Bayes and Logistic Regression. The best-performing method was
+Regex Patterns with a macro F1-score of 1.000.
+========================================================================
