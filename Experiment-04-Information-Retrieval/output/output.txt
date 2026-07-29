@@ -1,117 +1,17 @@
-========================================================================
-EXPERIMENT 04 – INFORMATION RETRIEVAL SYSTEM
-========================================================================
+TF-IDF Similarity Scores:
+Document 1 : 0.0000
+Document 2 : 0.5514
+Document 3 : 0.0000
 
-Student Name    : Divya M
-Register Number : 24AD0074
+LSA Similarity Scores:
+Document 1 : 1.0000
+Document 2 : 1.0000
+Document 3 : 0.0000
 
-Title:
-Build an Information Retrieval System Using Classical and Nonclassical Models and Compare Their Performance on a Dataset of Scientific Papers
+Most Relevant Document:
+Deep learning is used in artificial intelligence
 
-Aim:
-To implement an information retrieval system using TF-IDF and LSA techniques and retrieve relevant documents based on a user query.
-
-------------------------------------------------------------------------
-DATASET SUMMARY
-------------------------------------------------------------------------
-Total documents : 40
-  astronomy           : 8 documents
-  biomedical          : 8 documents
-  climate_science     : 8 documents
-  machine_learning    : 8 documents
-  renewable_energy    : 8 documents
-
-------------------------------------------------------------------------
-RETRIEVAL MODELS
-------------------------------------------------------------------------
-A. Boolean Term-Matching Retrieval
-   Scores documents by the count of matching query terms.
-   Awards a bonus when all query terms appear in the document.
-
-B. TF-IDF Vector-Space Retrieval
-   Fits a TF-IDF vectorizer on the corpus, transforms queries,
-   and ranks documents by cosine similarity.
-
-C. BM25 Probabilistic Retrieval
-   Okapi BM25 with k1=1.5, b=0.75.
-   Computes term-level IDF and length-normalized term frequency.
-
-D. Latent Semantic Analysis (LSA)
-   Applies TruncatedSVD to the TF-IDF matrix and ranks by
-   cosine similarity in the reduced latent space.
-
-------------------------------------------------------------------------
-EVALUATION
-------------------------------------------------------------------------
-Evaluation queries: 10
-Top-K             : 5
-
-Method         Prec@5    Rec@5    MAP@5      MRR
-------------------------------------------------
-Boolean        0.6200   0.3875   0.5920   1.0000
-TF-IDF         0.6200   0.3875   0.5900   1.0000
-BM25           0.6200   0.3875   0.5900   1.0000
-LSA            0.7400   0.4625   0.7090   1.0000
-
-Best retrieval model: LSA
-  (Selected by highest MAP@5, then MRR, then Mean Precision@5)
-
-------------------------------------------------------------------------
-CUSTOM QUERY RESULTS
-------------------------------------------------------------------------
-Query: Deep neural networks for detecting disease from medical images
-Processed tokens: ['deep', 'neural', 'network', 'detecting', 'disease', 'medical', 'image']
-
-  [Boolean] Top-5 Results:
-    1. D02 | Transfer Learning with Pre-trained Convolutional Networks
-       Topic: machine_learning  |  Score: 4.0000
-    2. D03 | Semi-supervised Clustering with Graph Neural Networks
-       Topic: machine_learning  |  Score: 2.0000
-    3. D04 | Bayesian Optimization for Neural Architecture Search
-       Topic: machine_learning  |  Score: 2.0000
-    4. D11 | Urban Heat Island Intensity in Tropical Megacities
-       Topic: climate_science  |  Score: 1.0000
-    5. D19 | Gut Microbiome Composition and Inflammatory Bowel Disease
-       Topic: biomedical  |  Score: 1.0000
-
-  [TF-IDF] Top-5 Results:
-    1. D02 | Transfer Learning with Pre-trained Convolutional Networks
-       Topic: machine_learning  |  Score: 0.2831
-    2. D03 | Semi-supervised Clustering with Graph Neural Networks
-       Topic: machine_learning  |  Score: 0.1698
-    3. D19 | Gut Microbiome Composition and Inflammatory Bowel Disease
-       Topic: biomedical  |  Score: 0.1216
-    4. D04 | Bayesian Optimization for Neural Architecture Search
-       Topic: machine_learning  |  Score: 0.1072
-    5. D39 | Pulsar Timing Arrays and Nanohertz Gravitational Waves
-       Topic: astronomy  |  Score: 0.0592
-
-  [BM25] Top-5 Results:
-    1. D02 | Transfer Learning with Pre-trained Convolutional Networks
-       Topic: machine_learning  |  Score: 11.9537
-    2. D03 | Semi-supervised Clustering with Graph Neural Networks
-       Topic: machine_learning  |  Score: 6.2341
-    3. D04 | Bayesian Optimization for Neural Architecture Search
-       Topic: machine_learning  |  Score: 5.2978
-    4. D19 | Gut Microbiome Composition and Inflammatory Bowel Disease
-       Topic: biomedical  |  Score: 4.0060
-    5. D39 | Pulsar Timing Arrays and Nanohertz Gravitational Waves
-       Topic: astronomy  |  Score: 3.1725
-
-  [LSA] Top-5 Results:
-    1. D06 | Attention Mechanisms in Recurrent Sequence Models
-       Topic: machine_learning  |  Score: 0.9044
-    2. D03 | Semi-supervised Clustering with Graph Neural Networks
-       Topic: machine_learning  |  Score: 0.8937
-    3. D02 | Transfer Learning with Pre-trained Convolutional Networks
-       Topic: machine_learning  |  Score: 0.8611
-    4. D04 | Bayesian Optimization for Neural Architecture Search
-       Topic: machine_learning  |  Score: 0.6502
-    5. D40 | Asteroid Spectral Taxonomy and Near-Earth Object Hazard
-       Topic: astronomy  |  Score: 0.4220
-
-------------------------------------------------------------------------
-RESULT
-------------------------------------------------------------------------
-An information retrieval system was implemented using Boolean, TF-IDF, BM25, and LSA models. The models were evaluated on 10 queries across 5 scientific topics. LSA achieved the highest MAP@5 and was selected as the best retrieval model.
-========================================================================
+Result:
+The information retrieval system successfully retrieved relevant
+documents using TF-IDF and LSA. LSA provided better semantic
+understanding of documents.

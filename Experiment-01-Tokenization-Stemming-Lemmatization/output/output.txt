@@ -1,66 +1,20 @@
-============================================================
-NLP Laboratory — Experiment 01
-============================================================
-Student Name    : Divya M
-Register Number : 24AD0074
+Original Text:
+The boys were running happily.
 
-Title:
-  Implement Tokenization and Compare the Effectiveness of Stemming Versus
-Lemmatization in Improving Text Preprocessing for Sentiment Analysis
+Tokens:
+['The', 'boys', 'were', 'running', 'happily', '.']
 
-Aim:
-  To implement tokenization and compare stemming and lemmatization for
-sentiment analysis text preprocessing.
+Stemmed Words:
+['the', 'boy', 'were', 'run', 'happili', '.']
 
-------------------------------------------------------------
-Dataset Information
-------------------------------------------------------------
-  Corpus            : NLTK sentence_polarity
-  Examples per class: 1000
-  Total examples    : 2000
-  Training set      : 1600
-  Test set          : 400
+Lemmatized Words:
+['The', 'boy', 'were', 'running', 'happily', '.']
 
-------------------------------------------------------------
-Evaluation Results (MultinomialNB with TF-IDF)
-------------------------------------------------------------
-Method                     Accuracy  Precision    Recall        F1   Vocab   Time(s)
-------------------------------------------------------------------------------------
-Baseline                     0.6500     0.6518    0.6500    0.6489    6383    0.9060
-Porter Stemmer               0.6525     0.6542    0.6525    0.6515    4947    2.1083
-Snowball Stemmer             0.6525     0.6542    0.6525    0.6515    4855    1.3826
-Lancaster Stemmer            0.6325     0.6353    0.6325    0.6306    4312    1.7927
-POS Lemmatizer               0.6575     0.6586    0.6575    0.6569    5561   11.5279
+Comparison:
+Stemming reduces words to root forms, which may not be meaningful.
+Lemmatization converts words to meaningful base forms.
 
-------------------------------------------------------------
-Best Preprocessing Method
-------------------------------------------------------------
-  Method : POS Lemmatizer
-  Macro F1-score : 0.6569
-
-------------------------------------------------------------
-Custom Sentence Analysis
-------------------------------------------------------------
-  Original text    : The movie was beautifully directed, although some scenes were moving too slowly.
-  Basic tokens     : ['movie', 'beautifully', 'directed', 'although', 'scenes', 'moving', 'slowly']
-  Porter stemmed   : ['movi', 'beauti', 'direct', 'although', 'scene', 'move', 'slowli']
-  Snowball stemmed : ['movi', 'beauti', 'direct', 'although', 'scene', 'move', 'slowli']
-  Lancaster stemmed: ['movy', 'beauty', 'direct', 'although', 'scen', 'mov', 'slow']
-  Lemmatized (POS) : ['movie', 'beautifully', 'direct', 'although', 'scene', 'move', 'slowly']
-  Predicted sentiment (POS Lemmatizer): Positive
-  Positive probability : 0.6659
-  Negative probability : 0.3341
-
-------------------------------------------------------------
-Final Result
-------------------------------------------------------------
-  The experiment compared five preprocessing methods for
-  sentiment analysis using the NLTK sentence_polarity corpus.
-  Based on macro F1-score, the best method was:
-
-      POS Lemmatizer (F1 = 0.6569)
-
-  Full numeric results are recorded in:
-    output/comparison.csv
-    output/comparison_plot.png
-============================================================
+Result:
+Tokenization, stemming, and lemmatization were successfully implemented.
+Lemmatization produced more meaningful words and improved text
+preprocessing for sentiment analysis.
